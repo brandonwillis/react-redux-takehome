@@ -16,6 +16,7 @@ function MultiSelect({ title, options, onChangeHandler, selected, errorMessage }
                     })
                 }
             </div>
+            <div className={styles.errorTextContainer}>{errorMessage}</div>
         </div>
     )
 }

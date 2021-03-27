@@ -1,4 +1,4 @@
-import { Fragment, useState, onEffect, useEffect } from 'react'
+import { useState, onEffect, useEffect } from 'react'
 import Input from '../../components/Input/Input'
 import Dropdown from '../../components/Dropdown/Dropdown'
 import MultiSelect from '../../components/MultiSelect/MultiSelect'
@@ -21,7 +21,6 @@ import {
 import styles from './MatchingCriteria.module.scss'
 
 function MatchingCriteria({ handleGoBackPageClicked, handleNextPageClicked }) {
-    const dispatch = useDispatch();
     const reasons = useSelector(reasonsSelector);
     const acceptingCriteria = useSelector(acceptingCriteriaSelector);
     const confirmationOptions = useSelector(confirmationOptionsSelector);
@@ -31,10 +30,51 @@ function MatchingCriteria({ handleGoBackPageClicked, handleNextPageClicked }) {
     const stateOptions = useSelector(statesSelector);
     const city = useSelector(citySelector)
     const state = useSelector(stateSelector)
+    const [errors, setErrors] = useState({});
+    const dispatch = useDispatch();
 
     const handleInputChanged = (fieldName) => (event) => dispatch(updateMatchingCriteria({ fieldName, value: event.target.value }))
     const handleReasonSelected = (event) => dispatch(reasonSelected(event.target.value))
     debugger
+
+    function validateMatchingCriteria() {
+        const validationErrors = {};
+
+        if(!reasons.length) {
+            validationErrors.reasons = 'Please select a reason for seeking therapy'
+        }
+
+        if(!hasPreferredTherapistGender) {
+            validationErrors.hasPreferredTherapistGender = 'Please select an option'
+        }
+
+        if (!preferredTherapistGender) {
+            validationErrors.preferredTherapistGender = 'Please select a therapist gender'
+        }
+
+        if (!city) {
+            validationErrors.city = 'Please enter your city'
+        }
+
+        if (!state) {
+            validationErrors.state = 'Please select a state'
+        }
+
+        validationErrors.hasErrors = Object.keys(validationErrors);
+        return validationErrors;
+    }
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        let validationErrors = validateMatchingCriteria();
+        debugger
+        if (validationErrors.hasErrors) {
+            setErrors((err) => ({ ...err, ...validationErrors }))
+        } else {
+            handleNextPageClicked();
+        }
+    }
+
     return <div>
         <h1>Matching Criteria</h1>
         <form onSubmit={() => { }}>
@@ -43,6 +83,7 @@ function MatchingCriteria({ handleGoBackPageClicked, handleNextPageClicked }) {
                 title='Reason(s) for Seeking Therapy'
                 selected={reasons}
                 options={acceptingCriteria}
+                errorMessage={errors.reasons}
             />
             <div className={styles.splitContainer}>
                 <Dropdown
@@ -50,14 +91,15 @@ function MatchingCriteria({ handleGoBackPageClicked, handleNextPageClicked }) {
                     title='Do you have a preferred therapist gender?'
                     options={confirmationOptions}
                     value={hasPreferredTherapistGender}
-                // errorMessage={errors.hasBeenToTherapy}
+                    errorMessage={errors.hasPreferredTherapistGender}
                 />
                 {hasPreferredTherapistGender === '1' &&
                     <Dropdown
                         onChangeHandler={handleInputChanged('preferredTherapistGender')}
-                        title='Select a Gender'
+                        title='Preferred Gender'
                         options={preferredTherapistGendersOptions}
                         value={preferredTherapistGender}
+                        errorMessage={errors.preferredTherapistGender}
                     />
                 }
             </div>
@@ -67,12 +109,14 @@ function MatchingCriteria({ handleGoBackPageClicked, handleNextPageClicked }) {
                     title='City'
                     type='text'
                     value={city}
+                    errorMessage={errors.city}
                 />
                 <Dropdown
                     onChangeHandler={handleInputChanged('state')}
                     title='State'
                     options={stateOptions}
                     value={state}
+                    errorMessage={errors.state}
                 />
             </div>
             <div className={styles.btnToolbar}>

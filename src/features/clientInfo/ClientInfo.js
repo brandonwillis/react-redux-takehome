@@ -42,6 +42,7 @@ export function ClientInfo() {
             }, {})
 
             const states = statesResult.map(state => ({ key: state.id, value: state.description }))
+            states.unshift({key: '', value: 'Select one'})
 
             dispatch(catalogValuesReceived({ acceptingCriteria, states }));
         })
