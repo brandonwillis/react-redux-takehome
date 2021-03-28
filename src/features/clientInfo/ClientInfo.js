@@ -9,6 +9,8 @@ import {
 
 import BiologicalInfo from '../biologicalInfo/BiologicalInfo'
 import MatchingCriteria from '../matchingCriteria/MatchingCriteria'
+import Review from '../review/Review'
+import styles from './ClientInfo.module.scss'
 
 function fetchAcceptingCriteria() {
     return fetch('https://api.tryframe.com/common/accepting-criteria')
@@ -36,20 +38,20 @@ export function ClientInfo() {
         ]).then(values => {
             const [acceptingCriteriasResult, statesResult] = values;
 
-            const acceptingCriteria = acceptingCriteriasResult.reduce((map, curr) => {
-                map[curr.id] = curr
-                return map
-            }, {})
-
+            const acceptingCriteria = acceptingCriteriasResult.map(item => ({ key: item.id, value: item.name }))
             const states = statesResult.map(state => ({ key: state.id, value: state.description }))
-            states.unshift({key: '', value: 'Select one'})
+            states.unshift({ key: '', value: 'Select one' })
 
             dispatch(catalogValuesReceived({ acceptingCriteria, states }));
         })
     }, [dispatch])
 
-    return <div>
-        {currentPage === 1 && <BiologicalInfo handleNextPageClicked={handleNextPageClicked} />}
-        {currentPage === 2 && <MatchingCriteria handleGoBackPageClicked={handleGoBackPageClicked} handleNextPageClicked={handleNextPageClicked} />}
-    </div>
+    return (
+        <main className={styles.container}>
+            <h1>Sign Up</h1>
+            {currentPage === 1 && <BiologicalInfo handleNextPageClicked={handleNextPageClicked} />}
+            {currentPage === 2 && <MatchingCriteria handleGoBackPageClicked={handleGoBackPageClicked} handleNextPageClicked={handleNextPageClicked} />}
+            {currentPage === 3 && <Review handleGoBackPageClicked={handleGoBackPageClicked} />}
+        </main>
+    )
 }

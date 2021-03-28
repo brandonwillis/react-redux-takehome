@@ -1,0 +1,19 @@
+.btn {
+    display: inline-block;
+    padding: 10px 30px;
+    cursor: pointer;
+    background-color: rgb(13, 105, 191);
+    color: #fff;
+    border: none;
+    border-radius:5px;
+}
+
+.btn:hover {
+    transform: scale(0.98);
+}
+
+
+
+.btn:focus {
+    outline: none;
+}

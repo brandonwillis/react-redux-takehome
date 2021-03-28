@@ -1,9 +1,26 @@
-.splitContainer {
-    display: flex;
-    // justify-content: space-between;
-}
+@import "~include-media/dist/_include-media.scss";
 
-.btnToolbar {
-    display: flex;
-    justify-content: space-between;
+.container {
+    .inputsContainer {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+    }
+
+    .splitContainer {
+        display: flex;
+    }
+
+    .btnToolbar {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 16px;
+    }
+
+    @include media("<=425px") {
+        .inputsContainer {
+            grid-template-columns: 100%;
+            gap: 0px;
+        }
+    }
 }

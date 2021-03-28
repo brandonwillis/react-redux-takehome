@@ -1,27 +1,58 @@
+@import "~include-media/dist/_include-media.scss";
+
 .container {
     display:flex;
     flex-direction: column;
     text-align: left;
-    padding: 16px;
+    padding: 8px;
+
+    .title {
+        font-size: 1.25rem;
+        padding: 8px 0px;
+    }
 
     .multiSelect {
         display: grid;
         grid-template-columns: repeat(4, 1fr) ;
+        gap: 8px;
    
         .row {
             display: flex;
-            padding: 10px 8px;
+            align-items:center;
+            padding: 4px;
         }
     
         label {
-            font-size: 1rem;
             margin-bottom: 0px;
+            cursor: pointer;
         }
     
         input {
             margin-right: 8px;
             height: 1rem;
-            width: 1rem;
+            min-width: 1rem;
+            cursor: pointer;
+        }
+
+        @include media(">425px", "<=tablet") {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        @include media("<=425px") {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 4px;
+
+            .row {
+                padding: 2px;
+            }
+
+            .title {
+                font-size: 1rem;
+            }
+
+            label {
+                font-size: .8rem;
+            }
         }
     }
 

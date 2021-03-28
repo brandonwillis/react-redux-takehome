@@ -1,12 +1,11 @@
 import { ClientInfo } from './features/clientInfo/ClientInfo'
-import './App.css';
+// import './App.css';
+import "./App.scss"
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <ClientInfo />
-      </header>
+      <ClientInfo />
     </div>
   );
 }

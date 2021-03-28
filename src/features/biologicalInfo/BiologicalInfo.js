@@ -1,23 +1,26 @@
 import { useState } from 'react'
-import Input from '../../components/Input/Input'
-import Dropdown from '../../components/Dropdown/Dropdown'
 import { useSelector, useDispatch } from 'react-redux'
 import {
-    nameSelector,
-    emailSelector,
-    phoneNumberSelector,
-    hasBeenToTherapySelector,
+    biologicalInfoSelector,
     updateBiographicalInfo
 } from './biologicalInfoSlice';
 import {
     confirmationOptionsSelector,
 } from '../clientInfo/clientInfoSlice'
+import Input from '../../components/Input/Input'
+import Dropdown from '../../components/Dropdown/Dropdown'
+import Button from '../../components/Button/Button'
+import styles from './BiologicalInfo.module.scss'
 
 function BiologicalInfo({ handleNextPageClicked }) {
-    const name = useSelector(nameSelector);
-    const email = useSelector(emailSelector);
-    const phoneNumber = useSelector(phoneNumberSelector);
-    const hasBeenToTherapy = useSelector(hasBeenToTherapySelector);
+    const biologicalInfo = useSelector(biologicalInfoSelector);
+    const {
+        name,
+        email,
+        phoneNumber,
+        hasBeenToTherapy,
+    } = biologicalInfo
+
     const confirmationOptions = useSelector(confirmationOptionsSelector)
     const [errors, setErrors] = useState({});
     const dispatch = useDispatch();
@@ -47,7 +50,8 @@ function BiologicalInfo({ handleNextPageClicked }) {
         }
 
         if (phoneNumber) {
-            const stripped = phoneNumber.replaceAll(/\D+/g, "")
+            const phoneNumberRegex = /[^\w\s]/gi
+            const stripped = phoneNumber.replace(phoneNumberRegex, "")
 
             if (isNaN(stripped) && stripped.length !== 10) {
                 validationErrors.phoneNumber = 'Please enter a valid Phone Number'
@@ -72,45 +76,52 @@ function BiologicalInfo({ handleNextPageClicked }) {
         }
     }
 
-    return <div>
-        <h1>Biological Info</h1>
-        <form onSubmit={handleSubmit}>
-            <Input
-                onChangeHandler={handleInputChanged('name')}
-                title='Name'
-                type='text'
-                value={name}
-                errorMessage={errors.name}
-            />
-            <Input
-                onChangeHandler={handleInputChanged('email')}
-                title='Email'
-                type='email'
-                value={email}
-                errorMessage={errors.email}
-            />
-            <Input
-                onChangeHandler={handleInputChanged('phoneNumber')}
-                title='Phone Number'
-                type='text'
-                value={phoneNumber}
-                errorMessage={errors.phoneNumber}
-
-            />
-            <Dropdown
-                onChangeHandler={handleInputChanged('hasBeenToTherapy')}
-                title='Have you been to therapy before?'
-                options={confirmationOptions}
-                value={hasBeenToTherapy}
-                errorMessage={errors.hasBeenToTherapy}
-            />
-            <div>
-                <div>
-                    <button type="submit">Next</button>
+    return (
+        <section className={styles.container}>
+            <h2>Biological Info</h2>
+            <form onSubmit={handleSubmit}>
+                <Input
+                    onChangeHandler={handleInputChanged('name')}
+                    title='Name'
+                    type='text'
+                    value={name}
+                    errorMessage={errors.name}
+                    id="name"
+                />
+                <Input
+                    onChangeHandler={handleInputChanged('email')}
+                    title='Email'
+                    type='text'
+                    value={email}
+                    errorMessage={errors.email}
+                    id="email"
+                />
+                <Input
+                    onChangeHandler={handleInputChanged('phoneNumber')}
+                    title='Phone Number'
+                    type='text'
+                    value={phoneNumber}
+                    errorMessage={errors.phoneNumber}
+                    id="phoneNumber"
+                />
+                <Dropdown
+                    onChangeHandler={handleInputChanged('hasBeenToTherapy')}
+                    title='Have you been to therapy before?'
+                    options={confirmationOptions}
+                    value={hasBeenToTherapy}
+                    errorMessage={errors.hasBeenToTherapy}
+                    id="has-been-to-therapy"
+                />
+                <div className={styles.btnToolbar}>
+                    <Button
+                        type="submit"
+                        text="Next"
+                        btnStyle="primary"
+                    />
                 </div>
-            </div>
-        </form>
-    </div>
+            </form>
+        </section>
+    )
 }
 
 export default BiologicalInfo

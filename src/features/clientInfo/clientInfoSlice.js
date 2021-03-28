@@ -10,14 +10,15 @@ export const clientInfoSlice = createSlice({
                 { key: '2', value: 'No' },
             ],
             preferredTherapistGenders: [
+                { key: '', value: 'Select one' },
                 { key: '1', value: 'Female' },
                 { key: '2', value: 'Male' },
                 { key: '3', value: 'Non-Binary' }
             ],
-            acceptingCriteria: {},
+            acceptingCriteria: [],
             states: [],
         },
-        currentPage: 2
+        currentPage: 1
     },
     reducers: {
         catalogValuesReceived: (state, action) => {
@@ -41,7 +42,8 @@ export const { nextPage, goBackPage, catalogValuesReceived } = clientInfoSlice.a
 export const currentPageSelector = state => state.clientInfo.currentPage
 export const confirmationOptionsSelector = state => state.clientInfo.catalogs.confirmationOptions
 export const preferredTherapistGendersSelector = state => state.clientInfo.catalogs.preferredTherapistGenders
-export const acceptingCriteriaSelector = state => state.clientInfo.catalogs.acceptingCriteria
+export const acceptingCriteriasSelector = state => state.clientInfo.catalogs.acceptingCriteria
 export const statesSelector = state => state.clientInfo.catalogs.states
+export const catalogsSelector = state => state.clientInfo.catalogs
 
 export default clientInfoSlice.reducer

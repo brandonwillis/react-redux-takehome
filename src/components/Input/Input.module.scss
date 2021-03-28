@@ -1,8 +1,15 @@
+@import "~include-media/dist/_include-media.scss";
+
 .container {
     display:flex;
     flex-direction: column;
     text-align: left;
-    padding: 16px;
+    padding: 8px;
+
+    .title {
+        font-size: 1.25rem;
+        padding-bottom: 8px;
+    }
 
     input {
         border: 0;
@@ -15,10 +22,10 @@
     input:focus {
         outline: none;
     }
-}
 
-.errorTextContainer {
-    height: 20px;
-    color: red;
-    font-size: 1rem;
+    .errorTextContainer {
+        height: 20px;
+        color: red;
+        font-size: 1rem;
+    }
 }

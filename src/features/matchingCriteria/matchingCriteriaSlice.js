@@ -5,7 +5,7 @@ export const matchingCriteriaSlice = createSlice({
     initialState: {
         reasons: {},
         hasPreferredTherapistGender: undefined,
-        preferredTherapistGender: '',
+        preferredTherapistGender: undefined,
         city: '',
         state: ''
     },
@@ -16,10 +16,10 @@ export const matchingCriteriaSlice = createSlice({
         },
         reasonSelected: (state, action) => {
             const { payload } = action;
-            if (state.reasons[payload]) {
-                delete state.reasons[payload]
+            if (state.reasons[payload.key] !== undefined) {
+                delete state.reasons[payload.key]
             } else {
-                state.reasons = { ...state.reasons, [payload]: true }
+                state.reasons = { ...state.reasons, [payload.key]: payload.value }
             }
         }
     }
@@ -27,10 +27,6 @@ export const matchingCriteriaSlice = createSlice({
 
 export const { updateMatchingCriteria, reasonSelected } = matchingCriteriaSlice.actions
 
-export const reasonsSelector = state => state.matchingCriteria.reasons
-export const hasPreferredTherapistGenderSelector = state => state.matchingCriteria.hasPreferredTherapistGender
-export const preferredTherapistGenderSelector = state => state.matchingCriteria.preferredTherapistGender
-export const citySelector = state => state.matchingCriteria.city
-export const stateSelector = state => state.matchingCriteria.state
+export const matchingCriteriaSelector = state => state.matchingCriteria
 
 export default matchingCriteriaSlice.reducer
