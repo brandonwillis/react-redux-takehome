@@ -1,5 +1,4 @@
-import { ClientInfo } from './features/clientInfo/ClientInfo'
-// import './App.css';
+import { ClientInfo } from './containers/clientInfo/ClientInfo'
 import "./App.scss"
 
 function App() {

@@ -47,9 +47,13 @@ export const reviewRequestSelector = createSelector(
     biologicalInfoSelector,
     matchingCriteriaSelector,
     (biologicalInfo, matchingCriteria) => {
+        const phoneNumberRegex = /[^\w\s]/gi
+        let phoneNumber = biologicalInfo.phoneNumber.replace(phoneNumberRegex, "")
+        
         return {
             ...biologicalInfo,
             ...matchingCriteria,
+            phoneNumber, 
             reasons: Object.keys(matchingCriteria.reasons),
             preferredTherapistGender: matchingCriteria.preferredTherapistGender || null
         }

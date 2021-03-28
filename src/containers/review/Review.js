@@ -1,5 +1,6 @@
 import {
-    reviewPageSelector
+    reviewPageSelector,
+    reviewRequestSelector
 } from './reviewSlice'
 import { useSelector } from 'react-redux'
 import ReviewText from '../../components/ReviewText/ReviewText'
@@ -8,6 +9,8 @@ import styles from './Review.module.scss'
 
 function Review({ handleGoBackPageClicked }) {
     const reviewInfo = useSelector(reviewPageSelector);
+    const reviewRequest = useSelector(reviewRequestSelector);
+
     const { 
         name, 
         email, 
@@ -22,7 +25,7 @@ function Review({ handleGoBackPageClicked }) {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        /* hit some api with reviewInfo.request and route to success screen */
+        /* send reviewRequest to api and route to success screen if successful */
     } 
 
     return (

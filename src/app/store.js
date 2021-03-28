@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
-import clientInfoReducer from '../features/clientInfo/clientInfoSlice';
-import biologicalInfoReducer from '../features/biologicalInfo/biologicalInfoSlice';
-import matchingCriteriaReducer from '../features/matchingCriteria/matchingCriteriaSlice';
+import clientInfoReducer from '../containers/clientInfo/clientInfoSlice';
+import biologicalInfoReducer from '../containers/biologicalInfo/biologicalInfoSlice';
+import matchingCriteriaReducer from '../containers/matchingCriteria/matchingCriteriaSlice';
 
 export default configureStore({
   reducer: {

@@ -50,7 +50,7 @@ function BiologicalInfo({ handleNextPageClicked }) {
         }
 
         if (phoneNumber) {
-            const phoneNumberRegex = /[^\w\s]/gi
+            const phoneNumberRegex = /[^\w\s]/gi  
             const stripped = phoneNumber.replace(phoneNumberRegex, "")
 
             if (isNaN(stripped) && stripped.length !== 10) {
